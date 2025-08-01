@@ -1,4 +1,65 @@
-def longest_palindrome(s:str):
+def longest_palindrome_center(s:str) -> tuple[str, int]:
+    """ searching for longest palindromic substring
+     starting from its CENTRAL character
+     return:
+     - sub: str, substring
+     - size: int, substring length
+     """
+    n = len(s)
+    size = 0 if n == 0 else 1
+    start = 0
+    for i in range(n):
+        # odd
+        l = max(0, i-1)
+        r = min(i+1, n-1)
+        while l >= 0 and r < n and s[l] == s[r]:
+            size_temp = r - l + 1
+            if size < size_temp:
+                size = size_temp
+                start = l
+            l -= 1
+            r += 1
+        # even
+        l = max(0, i)
+        r = min(i+1, n-1)
+        while l >= 0 and r < n and s[l] == s[r]:
+            size_temp = r - l + 1
+            if size < size_temp:
+                size = size_temp
+                start = l
+            l -= 1
+            r += 1
+    sub = s[start:start+size]
+    return sub, size
+
+
+def longest_palindrome_first(s:str) -> tuple[str, int]:
+    """ searching for longest palindromic substring
+     starting from its FIRST character
+     return:
+     - sub: str, substring
+     - size: int, substring length
+     """
+    n = len(s)
+    size = 0 if n == 0 else 1
+    start = 0
+    for i in range(n-1):
+        for j in range(i+1, n):
+            if s[i] == s[j]:  # first and last characters are equal
+                pal = True
+                for k in range(j-i):
+                    if s[i+k] != s[j-k]:
+                        pal = False
+                if pal:
+                    size_temp = i - j + 1
+                    if size < size_temp:
+                        size = size_temp
+                        start = i
+    sub = s[start:start+size]
+    return sub, size
+
+
+def ext_longest_palindrome(s:str):
     " Given a string s, find the longest palindromic substring in s.  "
     n = len(s)
     max_len = 0
@@ -23,7 +84,7 @@ def longest_palindrome(s:str):
     
     return s[start:max_len]
 
-def longest_palindrome_center(s:str):
+def ext_longest_palindrome_center(s:str):
     " Given a string s, find the longest palindromic substring in s by expanding around the center. "
     n = len(s)
     start = 0
@@ -53,5 +114,7 @@ def longest_palindrome_center(s:str):
 if __name__ == "__main__":
     strings = ["babad", "akjsfdhoierbghbwivrhawewafhajksdfhgirvuqhiceu"]
     for s in strings:
-        print(longest_palindrome(s))
+        print(ext_longest_palindrome(s))
+        print(ext_longest_palindrome_center(s))
+        print(longest_palindrome_first(s))
         print(longest_palindrome_center(s))
