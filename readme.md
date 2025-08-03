@@ -31,7 +31,8 @@ Aims of this repo:
   - [ ] `#u` apply the **diviede and conquer** approach
   - [ ] `#a` derive the sequence of numbers whose sum is the maximum value
 - [ ] Paths
-  - [ ] `#a` `GridTraveler` implementations
+  - [x] `#a` `GridTraveler` implementations
+  - [ ] `#a` `GridSum` implementations
 
 
 # Notebook Utils
